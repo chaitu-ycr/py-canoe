@@ -39,6 +39,29 @@ class TestStandalonePyCanoe:
         assert self.canoe_inst.new(auto_save=False, prompt_user=True)
         assert self.canoe_inst.quit()
 
+    def test_opening_different_cfgs_sequentially(self):
+        assert self.canoe_inst.open(canoe_cfg=self.canoe_cfg_dev, visible=True, auto_save=False, prompt_user=False)
+        assert self.canoe_inst.start_measurement()
+        assert self.canoe_inst.stop_measurement()
+        wait(1)
+        assert self.canoe_inst.open(canoe_cfg=self.canoe_cfg_diag, visible=True, auto_save=False, prompt_user=False)
+        assert self.canoe_inst.start_measurement()
+        assert self.canoe_inst.stop_measurement()
+        wait(1)
+        assert self.canoe_inst.open(canoe_cfg=self.canoe_cfg_test_setup, visible=True, auto_save=False, prompt_user=False)
+        assert self.canoe_inst.start_measurement()
+        assert self.canoe_inst.stop_measurement()
+        wait(1)
+
+    def test_attach_to_active_application(self):
+        assert self.canoe_inst.attach_to_active_application()
+        wait(1)
+        assert self.canoe_inst.check_signal_online(bus='CAN', channel=1, message='LightState', signal='FlashLight')
+        self.canoe_inst.check_signal_state(bus='CAN', channel=1, message='LightState', signal='FlashLight')
+        self.canoe_inst.get_signal_value(bus='CAN', channel=1, message='LightState', signal='FlashLight', raw_value=True)
+        wait(1)
+        assert self.canoe_inst.stop_measurement()
+
     def test_meas_start_stop_restart_methods(self):
         assert self.canoe_inst.open(canoe_cfg=self.canoe_cfg_dev, visible=True, auto_save=False, prompt_user=False)
         assert self.canoe_inst.start_measurement()
