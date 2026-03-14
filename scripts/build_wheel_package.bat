@@ -11,26 +11,36 @@ REM Move to script directory and then project root
 pushd %~dp0
 cd ..
 
-REM Set venv activation/deactivation commands
-set "VENV_ACTIVATE=%CD%\.venv\Scripts\activate.bat"
-set "VENV_DEACTIVATE=%CD%\.venv\Scripts\deactivate.bat"
+REM ----------------------------
+REM 1. Check if uv is installed, else install it
+REM ----------------------------
+:CHECK_UV
+where uv >nul 2>nul
+if %ERRORLEVEL% EQU 0 (
+    echo uv is already installed.
+    uv --version
+) else (
+    echo uv not found. Installing uv...
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    if %ERRORLEVEL% NEQ 0 goto ERROR
+    echo uv installation completed.
+)
 
 REM ----------------------------
-REM 1. Activate Virtual Environment
+REM 2. Sync Dependencies
 REM ----------------------------
-call "%VENV_ACTIVATE%"
+echo Syncing dependencies with uv...
+uv sync --link-mode=copy
 if %ERRORLEVEL% NEQ 0 goto ERROR
+echo Completed syncing dependencies.
 
 REM ----------------------------
-REM 2. Build the Wheel Package
+REM 3. Build the Wheel Package
 REM ----------------------------
 uv build
 if %ERRORLEVEL% NEQ 0 goto ERROR
+echo wheel package built successfully.
 
-REM ----------------------------
-REM 3. Deactivate Virtual Environment and Cleanup
-REM ----------------------------
-call "%VENV_DEACTIVATE%"
 popd
 goto :EOF
 

@@ -2,21 +2,22 @@
 
 ## Supported Versions
 
-Below `py_canoe` versions with :white_check_mark: ticks are supported for fixing vulnerabilities.
+Below `py-canoe` versions with :white_check_mark: ticks are supported for fixing vulnerabilities.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 3.x.x   | :white_check_mark: |
+| 26.x.x  | :white_check_mark: |
+| 3.x.x   | :x:                |
 | 2.x.x   | :x:                |
 | 1.x.x   | :x:                |
 | 0.x.x   | :x:                |
 
 ## Reporting a Vulnerability
 
-**Title**: Security Vulnerability in py_canoe
+**Title**: Security Vulnerability in py-canoe
 
 **Description**: 
-I discovered a vulnerability in the `py_canoe` package that allows [describe the vulnerability]. This can potentially lead to [describe the impact].
+I discovered a vulnerability in the `py-canoe` package that allows [describe the vulnerability]. This can potentially lead to [describe the impact].
 
 **Steps to Reproduce**:
 1. [Step 1]
@@ -31,7 +32,7 @@ I discovered a vulnerability in the `py_canoe` package that allows [describe the
 
 **Environment**:
 - Python version: [Your Python version]
-- py_canoe version: [Your py_canoe version]
+- py-canoe version: [Your py-canoe version]
 - Operating System: [Your OS]
 
 **Additional Information**: 

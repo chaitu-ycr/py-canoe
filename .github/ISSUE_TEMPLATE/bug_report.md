@@ -23,7 +23,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**py_canoe (please complete the following information):**
+**py-canoe (please complete the following information):**
  - Version [e.g. 2.1.0]
 
 **OS and Vector CANoe (please complete the following information):**

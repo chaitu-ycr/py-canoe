@@ -11,24 +11,31 @@ REM Move to script directory and then project root
 pushd %~dp0
 cd ..
 
-REM Set venv activation/deactivation commands
-set "VENV_ACTIVATE=%CD%\.venv\Scripts\activate.bat"
-set "VENV_DEACTIVATE=%CD%\.venv\Scripts\deactivate.bat"
-
 REM ----------------------------
-REM 1. Activate Virtual Environment
+REM 1. Check if uv is installed, else install it
 REM ----------------------------
-call "%VENV_ACTIVATE%"
-if %ERRORLEVEL% NEQ 0 goto ERROR
+:CHECK_UV
+where uv >nul 2>nul
+if %ERRORLEVEL% EQU 0 (
+    echo uv is already installed.
+    uv --version
+) else (
+    echo uv not found. Installing uv...
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    if %ERRORLEVEL% NEQ 0 goto ERROR
+    echo uv installation completed.
+)
 
 REM ----------------------------
 REM 2. Sync Dependencies
 REM ----------------------------
+echo Syncing dependencies with uv...
 uv sync --link-mode=copy
 if %ERRORLEVEL% NEQ 0 goto ERROR
+echo Completed syncing dependencies.
 
 REM ----------------------------
-REM 3. Run Pytest with Reports
+REM 4. Run Pytest with Reports
 REM ----------------------------
 uv run pytest tests/ ^
     --html=tests/report/test_reports/full_test_report.html --self-contained-html ^
@@ -41,7 +48,7 @@ uv run pytest tests/ ^
 if %ERRORLEVEL% NEQ 0 goto ERROR
 
 REM ----------------------------
-REM 4. Deactivate Virtual Environment and Cleanup
+REM 5. Deactivate Virtual Environment and Cleanup
 REM ----------------------------
 call "%VENV_DEACTIVATE%"
 popd

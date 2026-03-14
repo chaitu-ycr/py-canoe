@@ -11,28 +11,37 @@ REM Save original directory and move to project root
 set "ORIGIN_DIR=%CD%"
 pushd %~dp0
 cd ..
-set "ROOT_DIR=%CD%"
-
-REM Set venv activation/deactivation commands
-set "VENV_ACTIVATE=%ROOT_DIR%\.venv\Scripts\activate.bat"
-set "VENV_DEACTIVATE=%ROOT_DIR%\.venv\Scripts\deactivate.bat"
 
 REM ----------------------------
-REM 1. Activate Virtual Environment
+REM 1. Check if uv is installed, else install it
 REM ----------------------------
-call "%VENV_ACTIVATE%"
+:CHECK_UV
+where uv >nul 2>nul
+if %ERRORLEVEL% EQU 0 (
+    echo uv is already installed.
+    uv --version
+) else (
+    echo uv not found. Installing uv...
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    if %ERRORLEVEL% NEQ 0 goto ERROR
+    echo uv installation completed.
+)
+
+REM ----------------------------
+REM 2. Sync Dependencies
+REM ----------------------------
+echo Syncing dependencies with uv...
+uv sync --link-mode=copy
 if %ERRORLEVEL% NEQ 0 goto ERROR
+echo Completed syncing dependencies.
 
 REM ----------------------------
-REM 2. Deploy Documentation
+REM 3. Deploy Documentation to GitHub Pages
 REM ----------------------------
+echo Deploying documentation to GitHub Pages...
 uv run mkdocs gh-deploy
 if %ERRORLEVEL% NEQ 0 goto ERROR
-
-REM ----------------------------
-REM 3. Deactivate Virtual Environment and Cleanup
-REM ----------------------------
-call "%VENV_DEACTIVATE%"
+echo Documentation deployed successfully.
 popd
 cd "%ORIGIN_DIR%"
 goto :EOF
@@ -42,7 +51,6 @@ REM Error Handler
 REM ----------------------------
 :ERROR
 echo Failed to deploy documentation due to error %ERRORLEVEL%
-call "%VENV_DEACTIVATE%"
 popd
 cd "%ORIGIN_DIR%"
 pause

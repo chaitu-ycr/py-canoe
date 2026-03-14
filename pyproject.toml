@@ -1,7 +1,7 @@
 [project]
-name = "py_canoe"
-version = "26.0.2"
-description = "Python 🐍 Package for accessing Vector CANoe 🛶 Tool"
+name = "py-canoe"
+version = "26.4.0"
+description = "Python 🐍 Package for accessing Vector CANoe 🛶 Tool via COM Interface"
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.10, <=3.14"
@@ -39,9 +39,9 @@ dev = [
 ]
 
 [project.urls]
-homepage = "https://github.com/chaitu-ycr/py_canoe"
-repository = "https://github.com/chaitu-ycr/py_canoe"
-documentation = "https://chaitu-ycr.github.io/py_canoe/"
+homepage = "https://github.com/chaitu-ycr/py-canoe"
+repository = "https://github.com/chaitu-ycr/py-canoe"
+documentation = "https://chaitu-ycr.github.io/py-canoe/"
 
 [tool.uv]
 package = true

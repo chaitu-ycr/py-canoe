@@ -1,49 +1,46 @@
 @echo off
 
 REM ============================
-REM Create or Update Python Virtual Environment and Install Dependencies
+REM Create or Update Python Virtual Environment and Install Dependencies using uv
 REM ============================
 
-title Creating/Updating Tool Environment...
+title Creating/Updating Tool Environment with uv...
 
 REM Move to script directory and then project root
 pushd %~dp0
 cd ..
 
-REM Set venv path and python executable
-set "VENV_PATH=%CD%\.venv"
-set "PYTHON_EXE=%VENV_PATH%\Scripts\python.exe"
+REM ----------------------------
+REM 1. Check if uv is installed, else install it
+REM ----------------------------
+:CHECK_UV
+where uv >nul 2>nul
+if %ERRORLEVEL% EQU 0 (
+    echo uv is already installed.
+    uv --version
+) else (
+    echo uv not found. Installing uv...
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    if %ERRORLEVEL% NEQ 0 goto ERROR
+    echo uv installation completed.
+)
 
 REM ----------------------------
-REM 1. Check if venv exists, else create it
+REM 2. Sync Dependencies
 REM ----------------------------
-:CHECK_VENV
-if exist "%VENV_PATH%" (
-    echo Using '%PYTHON_EXE%' python.
-    "%PYTHON_EXE%" --version
-    echo Upgrading pip, installing uv, and syncing dependencies...
-    "%PYTHON_EXE%" -m pip install --upgrade pip
-    "%PYTHON_EXE%" -m pip install --upgrade uv
-    "%PYTHON_EXE%" -m uv sync --link-mode=copy
-    echo Completed installing tool dependencies.
-    popd
-    goto :EOF
-) else (
-    echo.
-    echo Virtual environment not found at '%VENV_PATH%'
-    echo Creating virtual environment now...
-    python --version
-    python -m venv "%VENV_PATH%"
-    if %ERRORLEVEL% NEQ 0 goto ERROR
-    echo Completed venv creation.
-    goto CHECK_VENV
-)
+echo Syncing dependencies with uv...
+uv sync --link-mode=copy
+if %ERRORLEVEL% NEQ 0 goto ERROR
+echo Completed syncing dependencies.
+
+popd
+goto :EOF
 
 REM ----------------------------
 REM Error Handler
 REM ----------------------------
 :ERROR
-echo Failed to setup virtual environment due to error %ERRORLEVEL%.
+echo Failed to set up virtual environment and install dependencies due to error %ERRORLEVEL%.
 popd
 pause
 goto :EOF
