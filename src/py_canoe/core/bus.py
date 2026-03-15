@@ -7,6 +7,7 @@ from py_canoe.core.child_elements.ports import Ports
 from py_canoe.core.child_elements.replay_collection import ReplayCollection
 from py_canoe.core.child_elements.security_configuration import SecurityConfiguration
 from py_canoe.core.child_elements.signals import Signal
+from py_canoe.core.database_utils.db import fetch_database_info
 from py_canoe.helpers.common import logger
 
 
@@ -90,7 +91,7 @@ class Bus:
     def get_j1939_signal(self, channel: int, message: str, signal: str, source_address: int, destination_address: int) -> Signal:
         return Signal(self.com_object.GetJ1939Signal(channel, message, signal, source_address, destination_address))
 
-    def get_bus_databases_info(self, bus: str = 'CAN') -> dict:
+    def get_bus_databases_info(self, bus: str = 'CAN', log_info: bool = False) -> dict:
         try:
             bus_type = bus.upper()
             if bus_type not in self.app.bus_types:
@@ -99,25 +100,38 @@ class Bus:
             databases_info = {}
             self.set_bus(bus_type)
             for db_obj in self.com_object.Databases:
+                db_file = getattr(db_obj, 'FullName', '')
+                fetched_db_info = fetch_database_info(db_file)
+                ecus = list(fetched_db_info.get('ecus', {}).keys())
+                frames = list(fetched_db_info.get('frames', {}).keys())
+                frames_signals = list(fetched_db_info.get('frames_signals', {}).keys())
+                pdus = list(fetched_db_info.get('pdus', {}).keys())
+                pdus_signals = list(fetched_db_info.get('pdus_signals', {}).keys())
                 info = {
-                    'full_name': getattr(db_obj, 'FullName', None),
-                    'path': getattr(db_obj, 'Path', None),
-                    'name': getattr(db_obj, 'Name', None),
-                    'channel': getattr(db_obj, 'Channel', None),
+                    'full_name': getattr(db_obj, 'FullName', ''),
+                    'path': getattr(db_obj, 'Path', ''),
+                    'name': getattr(db_obj, 'Name', ''),
+                    'channel': getattr(db_obj, 'Channel', ''),
                     'com_obj': db_obj,
+                    'ecus': ecus,
+                    'frames': frames,
+                    'frames_signals': frames_signals,
+                    'pdus': pdus,
+                    'pdus_signals': pdus_signals,
                 }
                 databases_info[info['name']] = info
-            logger.info(f'📜 {bus_type} bus databases information:')
-            for db_name, db_info in databases_info.items():
-                logger.info(f"    {db_name}:")
-                for key, value in db_info.items():
-                    logger.info(f"        {key}: {value}")
+            if log_info:
+                logger.info(f'📜 {bus_type} bus databases information:')
+                for db_name, db_info in databases_info.items():
+                    logger.info(f"    {db_name}:")
+                    for key, value in db_info.items():
+                        logger.info(f"        {key}: {value}")
             return databases_info
         except Exception as e:
             logger.error(f"❌ Error retrieving {bus} bus databases information: {e}")
             return {}
 
-    def get_bus_nodes_info(self, bus: str = 'CAN') -> dict:
+    def get_bus_nodes_info(self, bus: str = 'CAN', log_info: bool = False) -> dict:
         try:
             bus_type = bus.upper()
             if bus_type not in self.app.bus_types:
@@ -127,18 +141,19 @@ class Bus:
             self.set_bus(bus_type)
             for node_obj in self.com_object.Nodes:
                 info = {
-                    'full_name': getattr(node_obj, 'FullName', None),
-                    'path': getattr(node_obj, 'Path', None),
-                    'name': getattr(node_obj, 'Name', None),
-                    'active': getattr(node_obj, 'Active', None),
+                    'full_name': getattr(node_obj, 'FullName', ''),
+                    'path': getattr(node_obj, 'Path', ''),
+                    'name': getattr(node_obj, 'Name', ''),
+                    'active': getattr(node_obj, 'Active', ''),
                     'com_obj': node_obj,
                 }
                 nodes_info[info['name']] = info
-            logger.info(f'📜 {bus_type} bus nodes information:')
-            for node_name, node_info in nodes_info.items():
-                logger.info(f"    {node_name}:")
-                for key, value in node_info.items():
-                    logger.info(f"        {key}: {value}")
+            if log_info:
+                logger.info(f'📜 {bus_type} bus nodes information:')
+                for node_name, node_info in nodes_info.items():
+                    logger.info(f"    {node_name}:")
+                    for key, value in node_info.items():
+                        logger.info(f"        {key}: {value}")
             return nodes_info
         except Exception as e:
             logger.error(f"❌ Error retrieving {bus} bus nodes information: {e}")

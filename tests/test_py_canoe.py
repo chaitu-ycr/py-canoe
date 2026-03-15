@@ -110,8 +110,8 @@ class TestStandalonePyCanoe:
 
     def test_bus_signal_methods(self):
         self.canoe_inst.open(canoe_cfg=self.canoe_cfg_dev, visible=True, auto_save=False, prompt_user=False)
-        self.canoe_inst.get_bus_databases_info('CAN')
-        self.canoe_inst.get_bus_nodes_info('CAN')
+        self.canoe_inst.get_bus_databases_info('CAN', log_info=True)
+        self.canoe_inst.get_bus_nodes_info('CAN', log_info=True)
         assert self.canoe_inst.start_measurement()
         wait(1)
         self.canoe_inst.get_signal_full_name(bus='CAN', channel=1, message='LightState', signal='FlashLight')

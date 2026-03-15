@@ -137,23 +137,31 @@ class CANoe:
         self.application.user_capl_functions = self.user_capl_functions
         return self.application.attach_to_active_application()
 
-    def get_bus_databases_info(self, bus: str = 'CAN') -> dict:
+    def get_bus_databases_info(self, bus: str = 'CAN', log_info: bool = False) -> dict:
         """
         Gets the bus databases information.
+
+        Args:
+            bus (str): The bus name. Defaults to 'CAN'.
+            log_info (bool): Whether to log the databases information. Defaults to False.
 
         Returns:
             dict: The bus databases information.
         """
-        return self.application.bus.get_bus_databases_info(bus)
+        return self.application.bus.get_bus_databases_info(bus, log_info)
 
-    def get_bus_nodes_info(self, bus: str = 'CAN') -> dict:
+    def get_bus_nodes_info(self, bus: str = 'CAN', log_info: bool = False) -> dict:
         """
         Gets the bus nodes information.
+
+        Args:
+            bus (str): The bus name. Defaults to 'CAN'.
+            log_info (bool): Whether to log the nodes information. Defaults to False.
 
         Returns:
             dict: The bus nodes information.
         """
-        return self.application.bus.get_bus_nodes_info(bus)
+        return self.application.bus.get_bus_nodes_info(bus, log_info)
 
     def get_signal_value(self, bus: str, channel: int, message: str, signal: str, raw_value: bool = False, return_timestamp: bool = False) -> Union[int, float, None, tuple]:
         """

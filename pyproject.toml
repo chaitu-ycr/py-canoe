@@ -17,6 +17,7 @@ classifiers = [
     "Operating System :: Microsoft :: Windows"
 ]
 dependencies = [
+    "canmatrix[arxml,kcd,ldf,xls,xlsx,yaml,eds]",
     "pywin32",
 ]
 
