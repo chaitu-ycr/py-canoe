@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Python 🐍 Package for accessing Vector CANoe 🛶 Tool" /><meta name="author" content="chaitu-ycr" /><link rel="canonical" href="https://chaitu-ycr.github.io/py_canoe/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Python 🐍 Package for accessing Vector CANoe 🛶 Tool via COM Interface" /><meta name="author" content="chaitu-ycr" /><link rel="canonical" href="https://chaitu-ycr.github.io/py-canoe/" />
       <link rel="shortcut icon" href="img/favicon.ico" />
-    <title>py_canoe</title>
+    <title>py-canoe</title>
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -16,7 +16,7 @@
         // Current page data
         var mkdocs_page_name = "py_canoe";
         var mkdocs_page_input_path = "index.md";
-        var mkdocs_page_url = "/py_canoe/";
+        var mkdocs_page_url = "/py-canoe/";
       </script>
     
     <!--[if lt IE 9]>
@@ -32,7 +32,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href="." class="icon icon-home"> py_canoe
+          <a href="." class="icon icon-home"> py-canoe
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
@@ -46,15 +46,21 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#about-package">about package</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#important-links">important links</a>
+    <li class="toctree-l2"><a class="reference internal" href="#useful-links">🔗 useful links</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#prerequisites">prerequisites</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#setup-and-installation">setup and installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-way">standard way</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#using-astral-uv">using astral uv</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#example-use-cases">example use cases</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#import-canoe-module-and-create-canoe-object-instance">import CANoe module and create CANoe object instance</a>
+    <li class="toctree-l3"><a class="reference internal" href="#import-canoe-module-and-create-canoe-class-object">import CANoe module and create CANoe class object</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#open-canoe-start-measurement-get-version-info-stop-measurement-and-close-canoe-configuration">open CANoe, start measurement, get version info, stop measurement and close canoe configuration</a>
     </li>
@@ -82,6 +88,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#compile-capl-nodes-and-call-capl-function">compile CAPL nodes and call capl function</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#execute-test-configuration-test-units">execute test configuration test units</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#execute-test-setup-test-module-test-environment">execute test setup test module / test environment</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#getset-environment-variable-value">get/set environment variable value</a>
@@ -108,7 +116,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href=".">py_canoe</a>
+          <a href=".">py-canoe</a>
         
       </nav>
       <div class="wy-nav-content">
@@ -117,7 +125,7 @@
     <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
       <li class="breadcrumb-item active">py_canoe</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/chaitu-ycr/py_canoe/blob/main/docs/index.md">Edit</a>
+          <a href="https://github.com/chaitu-ycr/py-canoe/blob/main/docs/index.md">Edit</a>
     </li>
   </ul>
   <hr/>
@@ -125,48 +133,80 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="py_canoe"><a href="https://github.com/chaitu-ycr/py_canoe">py_canoe</a></h1>
+                <h1 id="py-canoe"><a href="https://github.com/chaitu-ycr/py-canoe">py-canoe</a></h1>
 <h2 id="about-package">about package</h2>
-<p>Python 🐍 Package for accessing Vector CANoe 🛶 Tool</p>
-<h2 id="important-links">important links</h2>
+<p>Python 🐍 Package for accessing Vector CANoe 🛶 Tool via COM Interface</p>
+<blockquote>
+<p><strong>Note:</strong> Looking for volunteers to maintain and contribute to this project. If interested, please reach out on <a href="https://www.linkedin.com/in/chaitu-ycr/">LinkedIn</a>.</p>
+</blockquote>
+<h2 id="useful-links">🔗 useful links</h2>
 <ul>
-<li><a href="https://chaitu-ycr.github.io/py_canoe/">🔗 github documentation</a></li>
-<li><a href="https://pypi.org/project/py_canoe/">🔗 pypi package</a></li>
-<li><a href="https://github.com/chaitu-ycr/py_canoe/releases">🔗 github releases</a></li>
-<li><a href="https://github.com/chaitu-ycr/py_canoe/discussions">🔗 for ideas💡/sugessions please create new discussion <strong>here</strong></a></li>
-<li><a href="https://github.com/chaitu-ycr/py_canoe/issues/new/choose">🔗 create issue or request feature <strong>here</strong></a></li>
-<li><a href="https://github.com/chaitu-ycr/py_canoe/fork">🔗 fork repo</a> and create pull request to contribute back to this project.</li>
+<li><a href="https://chaitu-ycr.github.io/py-canoe/">github documentation</a></li>
+<li><a href="https://pypi.org/project/py-canoe/">pypi package</a></li>
+<li><a href="https://github.com/chaitu-ycr/py-canoe/releases">github releases</a></li>
+<li><a href="https://github.com/chaitu-ycr/py-canoe/discussions">for ideas💡/sugessions comment under discussions <strong>here</strong></a></li>
+<li><a href="https://github.com/chaitu-ycr/py-canoe/issues/new/choose">create issue/request feature <strong>here</strong></a></li>
+<li><a href="https://github.com/chaitu-ycr/py-canoe/fork">fork repo</a> and create pull request to contribute back to this project.</li>
+<li><a href="https://help.vector.com/CANoeDEFamily/index.html">vector canoe documentation</a></li>
 </ul>
 <h2 id="prerequisites">prerequisites</h2>
 <ul>
-<li><a href="https://www.python.org/downloads/">Python(&gt;=3.10)</a></li>
-<li><a href="https://www.vector.com/int/en/support-downloads/download-center/">Vector CANoe software(&gt;=v11)</a></li>
-<li>Vector CANoe license. Also works with Demo version of CANoe with limited functionalities.</li>
+<li><a href="https://www.python.org/downloads/">python(&gt;=3.10)</a></li>
+<li><a href="https://www.vector.com/int/en/support-downloads/download-center/">vector canoe software(&gt;=v11)</a></li>
 <li><a href="https://code.visualstudio.com/Download">visual studio code</a></li>
 <li>Windows PC(recommended windows 11 OS along with 16GB RAM)</li>
 </ul>
 <h2 id="setup-and-installation">setup and installation</h2>
-<p>create python virtual environment</p>
-<pre><code>python -m venv .venv
+<p>create a python virtual environment and activate it. you can use any method to create a virtual environment; here are some examples.</p>
+<h3 id="standard-way">standard way</h3>
+<pre><code class="language-bash"># create a new directory for your project (optional)
+mkdir my-project
+cd my-project
+
+# create virtual environment
+python -m venv .venv
+
+# activate virtual environment
+.venv\Scripts\activate
+
+# upgrade pip (optional but recommended)
+python -m pip install --upgrade pip
+
+# install/upgrade py-canoe package
+pip install py-canoe --upgrade
 </code></pre>
-<p>activate virtual environment</p>
-<pre><code>.venv\Scripts\activate
-</code></pre>
-<p>upgrade pip (optional)</p>
-<pre><code>python -m pip install pip --upgrade
-</code></pre>
-<p>Install <a href="https://pypi.org/project/py_canoe/"><strong>py_canoe</strong></a> package</p>
-<pre><code>pip install py_canoe --upgrade
+<h3 id="using-astral-uv">using astral uv</h3>
+<pre><code class="language-bash"># install uv if not already installed (optional)
+powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;
+
+# create a new uv python package (optional)
+uv init my-project --package
+cd my-project
+
+# create virtual environment with uv
+uv venv .venv
+
+# activate virtual environment
+.venv\Scripts\activate
+
+# install/upgrade py-canoe package
+uv pip install py-canoe --upgrade
+
+# add py-canoe as dependency to your pyproject.toml (optional)
+uv add py-canoe
 </code></pre>
 <hr />
 <h2 id="example-use-cases">example use cases</h2>
-<h3 id="import-canoe-module-and-create-canoe-object-instance">import CANoe module and create CANoe object instance</h3>
+<h3 id="import-canoe-module-and-create-canoe-class-object">import CANoe module and create CANoe class object</h3>
 <pre><code class="language-python">from py_canoe import CANoe, wait
 
 canoe_inst = CANoe()
 </code></pre>
 <h3 id="open-canoe-start-measurement-get-version-info-stop-measurement-and-close-canoe-configuration">open CANoe, start measurement, get version info, stop measurement and close canoe configuration</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo.cfg')
 
 canoe_inst.start_measurement()
 canoe_version_info = canoe_inst.get_canoe_version_info()
@@ -174,14 +214,20 @@ canoe_inst.stop_measurement()
 canoe_inst.quit()
 </code></pre>
 <h3 id="restartreset-running-measurement">restart/reset running measurement</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.reset_measurement()
 canoe_inst.stop_ex_measurement()
 </code></pre>
 <h3 id="open-canoe-offline-config-and-startbreakstepresetstop-measurement-in-offline-mode">open CANoe offline config and start/break/step/reset/stop measurement in offline mode</h3>
-<pre><code class="language-python">canoe_inst.open(r'tests\demo_cfg\demo_offline.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(r'tests\demo_cfg\demo_offline.cfg')
 
 canoe_inst.add_offline_source_log_file(r'tests\demo_cfg\Logs\demo_log.blf')
 canoe_inst.start_measurement_in_animation_mode(animation_delay=200)
@@ -191,7 +237,10 @@ canoe_inst.reset_measurement_in_offline_mode()
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="getset-canoe-measurement-index">get/set CANoe measurement index</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 meas_index_value = canoe_inst.get_measurement_index()
 canoe_inst.start_measurement()
@@ -203,19 +252,28 @@ canoe_inst.reset_measurement()
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="save-canoe-config-to-a-different-version-with-different-name">save CANoe config to a different version with different name</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.save_configuration_as(path=r'tests\demo_cfg\demo_v10.cfg', major=10, minor=0, create_dir=True)
 </code></pre>
 <h3 id="get-can-bus-statistics-of-can-channel-1">get CAN bus statistics of CAN channel 1</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.get_can_bus_statistics(channel=1)
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="getset-bus-signal-value-check-signal-state-and-get-signal-full-name">get/set bus signal value, check signal state and get signal full name</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 sig_full_name = canoe_inst.get_signal_full_name(bus='CAN', channel=1, message='LightState', signal='FlashLight')
@@ -227,7 +285,10 @@ sig_val = canoe_inst.get_signal_value(bus='CAN', channel=1, message='LightState'
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="clear-write-window-read-text-from-write-window-control-write-window-output-file">clear write window / read text from write window / control write window output file</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.enable_write_window_output_file(r'tests\demo_cfg\Logs\write_win.txt')
 canoe_inst.start_measurement()
@@ -238,11 +299,17 @@ canoe_inst.stop_measurement()
 canoe_inst.disable_write_window_output_file()
 </code></pre>
 <h3 id="switch-between-canoe-desktops">switch between CANoe desktops</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 canoe_inst.ui_activate_desktop('Configuration')
 </code></pre>
 <h3 id="getset-system-variable-or-define-system-variable">get/set system variable or define system variable</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.set_system_variable_value('demo::level_two_1::sys_var2', 20)
@@ -259,7 +326,10 @@ sys_var_val = canoe_inst.get_system_variable_value('sys_demo::demo')
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="send-diagnostic-request-control-tester-present">send diagnostic request, control tester present</h3>
-<pre><code class="language-python">canoe_inst.open(r'tests\demo_cfg\demo_diag.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(r'tests\demo_cfg\demo_diag.cfg')
 
 canoe_inst.start_measurement()
 resp = canoe_inst.send_diag_request('Door', 'DefaultSession_Start', False)
@@ -274,7 +344,10 @@ resp = canoe_inst.send_diag_request('Door', '10 03', return_sender_name=True)
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="set-replay-block-source-file-control-replay-block-start-stop">set replay block source file / control replay block start stop</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.set_replay_block_file(block_name='DemoReplayBlock', recording_file_path=r'tests\demo_cfg\Logs\demo_log.blf')
@@ -284,7 +357,10 @@ canoe_inst.control_replay_block(block_name='DemoReplayBlock', start_stop=False)
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="compile-capl-nodes-and-call-capl-function">compile CAPL nodes and call capl function</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.compile_all_capl_nodes()
 canoe_inst.start_measurement()
@@ -292,8 +368,22 @@ canoe_inst.call_capl_function('addition_function', 100, 200)
 canoe_inst.call_capl_function('hello_world')
 canoe_inst.stop_measurement()
 </code></pre>
+<h3 id="execute-test-configuration-test-units">execute test configuration test units</h3>
+<pre><code class="language-python">from py_canoe import CANoe, wait
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'CAN\Diagnostics\UDSSystem\UDSSystem.cfg')
+canoe_inst.start_measurement()
+canoe_inst.execute_all_test_configurations(wait_for_completion=True)
+canoe_inst.execute_test_configuration('DiagTestConfiguration', wait_for_completion=False)
+wait(5)
+canoe_inst.stop_test_configuration()
+canoe_inst.stop_measurement()
+</code></pre>
 <h3 id="execute-test-setup-test-module-test-environment">execute test setup test module / test environment</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.execute_all_test_modules_in_test_env(demo_test_environment)
@@ -301,7 +391,10 @@ canoe_inst.execute_test_module('demo_test_node_002')
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="getset-environment-variable-value">get/set environment variable value</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'tests\demo_cfg\demo_dev.cfg')
 
 canoe_inst.start_measurement()
 canoe_inst.set_environment_variable_value('int_var', 123.12)
@@ -315,7 +408,10 @@ var_value = canoe_inst.get_environment_variable_value('data_var')
 canoe_inst.stop_measurement()
 </code></pre>
 <h3 id="addremove-database">add/remove database</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r&quot;tests\demo_cfg\demo_conf_gen_db_setup.cfg&quot;)
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r&quot;tests\demo_cfg\demo_conf_gen_db_setup.cfg&quot;)
 
 canoe_inst.start_measurement()
 # add database
@@ -324,7 +420,10 @@ canoe_inst.add_database(fr&quot;{file_path}\demo_cfg\DBs\sample_databases\XCP.db
 canoe_inst.remove_database(fr&quot;{file_path}\demo_cfg\DBs\sample_databases\XCP.dbc&quot;, 1)
 </code></pre>
 <h3 id="startstop-online-logging-block">start/stop online logging block</h3>
-<pre><code class="language-python">canoe_inst.open(canoe_cfg=r&quot;tests\demo_cfg\demo_online_setup.cfg&quot;)
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r&quot;tests\demo_cfg\demo_online_setup.cfg&quot;)
 
 canoe_inst.start_measurement()
 # stop logging block
@@ -334,7 +433,10 @@ wait(2)
 canoe_inst.start_stop_online_logging_block(fr'{demo_cfg_dir}\Logs\demo_online_setup_log.blf', start_stop=True)
 </code></pre>
 <h3 id="working-with-logging-blocks">working with logging blocks</h3>
-<pre><code class="language-python"># remove current logging blocks
+<pre><code class="language-python">from py_canoe import CANoe, wait
+
+canoe_inst = CANoe()
+# remove current logging blocks
 for i in range(canoe_inst.logging_collection.count):
     canoe_inst.remove_logging_block(1)  # iteration start from 1 and shifts after each delete
 # add a new block
@@ -385,7 +487,7 @@ canoe_inst.quit()
     <script>var base_url = ".";</script>
     <script src="js/theme_extra.js"></script>
     <script src="js/theme.js"></script>
-      <script src="https://unpkg.com/mermaid@11.9.0/dist/mermaid.core.mjs" type="module"></script>
+      <script src="https://unpkg.com/mermaid@11.13.0/dist/mermaid.core.mjs" type="module"></script>
       <script src="search/main.js"></script>
     <script>
         jQuery(function () {
@@ -398,5 +500,5 @@ canoe_inst.quit()
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-02-24 17:54:12.997364+00:00
+Build Date UTC : 2026-03-15 18:42:49.680964+00:00
 -->
