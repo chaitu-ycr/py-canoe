@@ -15,10 +15,10 @@ class TestTreeElements:
 
     def item(self, index: int) -> TestTreeElement:
         return TestTreeElement(self.com_object.Item(index))
-
-    def add(self, name: str) -> TestTreeElement:
-        return TestTreeElement(self.com_object.Add(name))
-
-    def remove(self, index: int):
-        self.com_object.Remove(index)
-
+    
+    def fetch_all_test_tree_elements(self) -> dict[str, TestTreeElement]:
+        test_tree_elements = dict()
+        for index in range(1, self.count + 1):
+            tte_inst = self.item(index)
+            test_tree_elements[tte_inst.caption] = tte_inst
+        return test_tree_elements

@@ -12,6 +12,9 @@ class TestConfigurations:
     @property
     def count(self) -> int:
         return self.com_object.Count
+    
+    def item(self, index: int) -> TestConfiguration:
+        return TestConfiguration(self.com_object.Item(index))
 
     def add(self, name: str) -> 'TestConfiguration':
         return TestConfiguration(self.com_object.Add(name))
@@ -22,6 +25,6 @@ class TestConfigurations:
     def fetch_all_test_configurations(self) -> dict[str, TestConfiguration]:
         test_configurations = dict()
         for index in range(1, self.count + 1):
-            tc_inst = TestConfiguration(self.com_object.Item(index))
+            tc_inst = self.item(index)
             test_configurations[tc_inst.name] = tc_inst
         return test_configurations

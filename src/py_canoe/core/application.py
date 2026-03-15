@@ -101,6 +101,7 @@ class Application:
             self._common_between_pre_and_post_cfg_open()
             self.networks.fetch_diagnostic_devices()
             self.configuration.fetch_test_modules()
+            self.configuration.fetch_test_units()
         except Exception as e:
             logger.error(f"❌ Error initializing objects after loading configuration: {e}")
 
@@ -115,10 +116,10 @@ class Application:
             if status:
                 logger.info("📢 New empty CANoe configuration Opened 🎉")
                 self._setup_post_configuration_loading()
+            return status
         except Exception as e:
             logger.error(f"❌ Error creating new configuration: {e}")
             status = False
-        finally:
             return status
 
     def open(self, canoe_cfg: str | Path, visible: bool = True, auto_save: bool = True, prompt_user: bool = False, timeout: int = 5) -> bool:
@@ -133,10 +134,10 @@ class Application:
             if status:
                 logger.info(f"📢 CANoe Configuration {canoe_cfg} Opened 🎉")
                 self._setup_post_configuration_loading()
+            return status
         except Exception as e:
             logger.error(f"❌ Error opening configuration: {e}")
             status = False
-        finally:
             return status
 
     def quit(self, timeout: int = 5) -> bool:
@@ -148,10 +149,10 @@ class Application:
             status = DoEventsUntil(lambda: self.application_events.QUIT, timeout, "Quit CANoe application")
             if status:
                 logger.info("📢 CANoe Application Quit Successfully 🎉")
+            return status
         except Exception as e:
             logger.error(f"❌ Error during CANoe quit: {e}")
             status = False
-        finally:
             return status
 
     def attach_to_active_application(self) -> bool:

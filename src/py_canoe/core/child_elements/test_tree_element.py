@@ -1,4 +1,18 @@
+from enum import Enum
 import win32com.client
+
+
+class TestTreeElementType(Enum):
+    """Enum representing the types of test tree element."""
+    TEST_TYPE_RESERVED = 0
+    TEST_CONFIGURATION = 1
+    TEST_UNIT = 2
+    TEST_GROUP = 3
+    TEST_SEQUENCE = 4
+    TEST_CASE = 5
+    TEST_FIXTURE = 6
+    TEST_CASE_LIST = 7
+    TEST_SEQUENCE_LIST = 8
 
 
 class TestTreeElement:
@@ -31,8 +45,8 @@ class TestTreeElement:
         return self.com_object.Name
 
     @property
-    def type(self) -> int:
-        return self.com_object.Type
+    def type(self) -> TestTreeElementType:
+        return TestTreeElementType(self.com_object.Type)
 
     @property
     def elements(self):

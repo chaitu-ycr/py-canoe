@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Iterable, Union
 if TYPE_CHECKING:
     from py_canoe.core.application import Application
     from py_canoe.core.child_elements.measurement_setup import Logging, ExporterSymbol, Message
+    from py_canoe.core.child_elements.test_configurations import TestConfiguration
 import os
 import win32com.client
 
@@ -42,7 +43,7 @@ class Configuration:
         self.configuration_test_configurations = lambda: self.test_configurations
         self.configuration_test_setup = lambda: self.test_setup
         self.__test_setup_environments = self.configuration_test_setup().test_environments.fetch_all_test_environments()
-        self.__test_configuration_test_configurations = self.configuration_test_configurations().fetch_all_test_configurations()
+        self.__test_configurations = self.configuration_test_configurations().fetch_all_test_configurations()
         self.__test_modules = list()
         self.__test_units = list()
 
@@ -50,12 +51,13 @@ class Configuration:
         for te_name, te_inst in self.__test_setup_environments.items():
             for tm_name, tm_inst in te_inst.get_all_test_modules().items():
                 self.__test_modules.append({'name': tm_name, 'object': tm_inst, 'environment': te_name})
-    
+
     def fetch_test_units(self):
-        for tc_name, tc_inst in self.__test_configuration_test_configurations.items():
+        for tc_name, tc_inst in self.__test_configurations.items():
             for tu_index in range(1, tc_inst.test_units.count + 1):
                 tu_inst = tc_inst.test_units.item(tu_index)
                 self.__test_units.append({'name': tu_inst.name, 'object': tu_inst, 'test_configuration': tc_name})
+        return self.__test_units
 
     @property
     def c_libraries(self) -> 'CLibraries':
@@ -92,7 +94,7 @@ class Configuration:
     @property
     def general_setup(self) -> 'GeneralSetup':
         return GeneralSetup(self.com_object.GeneralSetup)
-    
+
     # GlobalTcpIpStackSetting
 
     @property
@@ -114,7 +116,7 @@ class Configuration:
     @property
     def name(self) -> str:
         return self.com_object.Name
-    
+
     # NETTargetFramework
 
     @property
@@ -136,7 +138,7 @@ class Configuration:
     @property
     def saved(self) -> bool:
         return self.com_object.Saved
-    
+
     # Sensor
 
     # SimulationSetup
@@ -281,6 +283,13 @@ class Configuration:
         except Exception as e:
             logger.error(f"❌ Error enabling/disabling replay block '{block_name}': {e}")
             return False
+
+    def get_test_configurations(self) -> dict[str, 'TestConfiguration']:
+        try:
+            return self.__test_configurations
+        except Exception as e:
+            logger.error(f'❌ failed to get test configurations. {e}')
+            return {}
 
     def get_test_environments(self) -> dict:
         try:

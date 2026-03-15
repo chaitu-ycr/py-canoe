@@ -1,5 +1,6 @@
 import os
 from py_canoe import CANoe, wait
+from py_canoe.helpers.common import logger
 
 
 class TestStandalonePyCanoe:
@@ -258,3 +259,20 @@ class TestStandalonePyCanoe:
         wait(1)
         assert self.canoe_inst.start_stop_online_logging_block(fr'{self.demo_cfg_dir}\Logs\demo_online_setup_log.blf', start_stop=False)
         assert self.canoe_inst.stop_measurement()
+
+    def test_test_unit_methods(self):
+        self.canoe_inst.open(canoe_cfg=r'C:\Users\Public\Documents\Vector\CANoe\Sample Configurations 11.0.81\CAN\Diagnostics\UDSSystem\UDSSystem.cfg')
+        # assert self.canoe_inst.start_measurement()
+        test_configurations = self.canoe_inst.application.configuration.get_test_configurations()
+        for tc_name, tc_inst in test_configurations.items():
+            logger.info(f"Test Configuration: {tc_name}")
+            test_units = tc_inst.test_units.fetch_all_test_units()
+            test_tree_elements = tc_inst.elements.fetch_all_test_tree_elements()
+            for tu_name, tu_inst in test_units.items():
+                logger.info(f"  Test Unit: {tu_name}")
+            for tte_name, tte_inst in test_tree_elements.items():
+                logger.info(f"  Test Tree Element: {tte_name}")
+                for tte_tu_name, tte_tu_inst in tte_inst.elements.fetch_all_test_tree_elements().items():
+                    tte_tu_inst.enabled = False
+                    logger.info(f"    Test Tree Element's Test Unit: {tte_tu_name}")
+        # assert self.canoe_inst.stop_measurement()
