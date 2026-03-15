@@ -13,6 +13,7 @@ from py_canoe.core.child_elements.general_setup import GeneralSetup
 from py_canoe.core.child_elements.measurement_setup import MeasurementSetup
 from py_canoe.core.child_elements.database_setup import Databases
 from py_canoe.core.child_elements.replay_collection import ReplayCollection
+from py_canoe.core.child_elements.test_configurations import TestConfigurations
 from py_canoe.core.child_elements.test_setup import TestSetup
 from py_canoe.helpers.common import logger, wait
 
@@ -38,14 +39,23 @@ class Configuration:
         self.bus_types = self.app.bus_types
         self.com_object = win32com.client.Dispatch(self.app.com_object.Configuration)
         # self.configuration_events: ConfigurationEvents = win32com.client.WithEvents(self.com_object, ConfigurationEvents)
+        self.configuration_test_configurations = lambda: self.test_configurations
         self.configuration_test_setup = lambda: self.test_setup
         self.__test_setup_environments = self.configuration_test_setup().test_environments.fetch_all_test_environments()
+        self.__test_configuration_test_configurations = self.configuration_test_configurations().fetch_all_test_configurations()
         self.__test_modules = list()
+        self.__test_units = list()
 
     def fetch_test_modules(self):
         for te_name, te_inst in self.__test_setup_environments.items():
             for tm_name, tm_inst in te_inst.get_all_test_modules().items():
                 self.__test_modules.append({'name': tm_name, 'object': tm_inst, 'environment': te_name})
+    
+    def fetch_test_units(self):
+        for tc_name, tc_inst in self.__test_configuration_test_configurations.items():
+            for tu_index in range(1, tc_inst.test_units.count + 1):
+                tu_inst = tc_inst.test_units.item(tu_index)
+                self.__test_units.append({'name': tu_inst.name, 'object': tu_inst, 'test_configuration': tc_name})
 
     @property
     def c_libraries(self) -> 'CLibraries':
@@ -126,10 +136,6 @@ class Configuration:
     @property
     def saved(self) -> bool:
         return self.com_object.Saved
-
-    @property
-    def test_setup(self) -> 'TestSetup':
-        return TestSetup(self.com_object.TestSetup)
     
     # Sensor
 
@@ -141,9 +147,13 @@ class Configuration:
 
     # SymbolMappings
 
-    # TestConfigurations
+    @property
+    def test_configurations(self) -> 'TestConfigurations':
+        return TestConfigurations(self.com_object.TestConfigurations)
 
-    # TestSetup
+    @property
+    def test_setup(self) -> 'TestSetup':
+        return TestSetup(self.com_object.TestSetup)
 
     # UserFiles
 
