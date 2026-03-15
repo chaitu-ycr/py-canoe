@@ -12,41 +12,41 @@ TEST_CONFIGURATION_TIMEOUT = 10  # seconds
 
 
 class TestConfigurationVerdict(Enum):
-    VERDICT_NOT_AVAILABLE = 0
-    VERDICT_PASSED = 1
-    VERDICT_FAILED = 2
-    VERDICT_NONE = 3
-    VERDICT_INCONCLUSIVE = 4
-    VERDICT_ERROR_IN_TEST_SYSTEM = 5
+    NOT_AVAILABLE = 0
+    PASSED = 1
+    FAILED = 2
+    NONE = 3
+    INCONCLUSIVE = 4
+    ERROR_IN_TEST_SYSTEM = 5
 
 
 class TestConfigurationStopReason(Enum):
-    STOP_REASON_END = 0
-    STOP_REASON_USER_ABORT = 1
-    STOP_REASON_GENERAL_ERROR = 2
-    STOP_REASON_VERDICT_IMPACT = 3
-    STOP_REASON_TEST_CASE_INCONCLUSIVE = 4
-    STOP_REASON_TEST_CASE_ERROR = 5
+    END = 0
+    USER_ABORT = 1
+    GENERAL_ERROR = 2
+    VERDICT_IMPACT = 3
+    TEST_CASE_INCONCLUSIVE = 4
+    TEST_CASE_ERROR = 5
 
 
 class TestConfigurationEvents:
     """The TestConfigurationEvents object provides access to events related to a test configuration."""
     def __init__(self):
-        self.TC_STARTED: bool = False
-        self.TC_STOPPED: bool = False
-        self.TC_STOP_REASON: TestConfigurationStopReason = TestConfigurationStopReason.STOP_REASON_END
-        self.TC_VERDICT: TestConfigurationVerdict = TestConfigurationVerdict.VERDICT_NOT_AVAILABLE
+        self.STARTED: bool = False
+        self.STOPPED: bool = False
+        self.STOP_REASON: TestConfigurationStopReason = TestConfigurationStopReason.END
+        self.VERDICT: TestConfigurationVerdict = TestConfigurationVerdict.NOT_AVAILABLE
 
     def OnStart(self):
-        self.TC_STARTED = True
-    
+        self.STARTED = True
+
     def OnStop(self, reason: int):
-        self.TC_STOP_REASON = TestConfigurationStopReason(reason)
-        self.TC_STOPPED = True
-    
+        self.STOP_REASON = TestConfigurationStopReason(reason)
+        self.STOPPED = True
+
     def OnVerdictChanged(self, verdict: int):
-        self.TC_VERDICT = TestConfigurationVerdict(verdict)
-    
+        self.VERDICT = TestConfigurationVerdict(verdict)
+
     def OnVerdictFail(self):
         pass
 
@@ -108,32 +108,32 @@ class TestConfiguration:
     @property
     def verdict(self) -> 'TestConfigurationVerdict':
         return TestConfigurationVerdict(self.com_object.Verdict)
-    
+
     def apply_variants(self) -> None:
         self.com_object.ApplyVariants()
-    
+
     def apply_variants_async(self) -> None:
         self.com_object.ApplyVariantsAsync()
-    
+
     def contains_id(self, test_case_id: int) -> bool:
         return self.com_object.ContainsId(test_case_id)
-    
+
     def pause(self) -> None:
         self.com_object.Pause()
-    
+
     def resume(self) -> None:
         self.com_object.Resume()
-    
+
     def start(self) -> None:
-        self.test_configuration_events.TC_STARTED = False
+        self.test_configuration_events.STARTED = False
         self.com_object.Start()
-        status = DoEventsUntil(lambda: self.test_configuration_events.TC_STARTED, TEST_CONFIGURATION_TIMEOUT, "Test Configuration Start")
+        status = DoEventsUntil(lambda: self.test_configuration_events.STARTED, TEST_CONFIGURATION_TIMEOUT, "Test Configuration Start")
         if status:
             logger.info(f'🧪🏃‍➡️ started executing test configuration ({self.name})...')
-    
+
     def stop(self) -> None:
-        self.test_configuration_events.TC_STOPPED = False        
+        self.test_configuration_events.STOPPED = False
         self.com_object.Stop()
-        status = DoEventsUntil(lambda: self.test_configuration_events.TC_STOPPED, TEST_CONFIGURATION_TIMEOUT, "Test Configuration Stop")
+        status = DoEventsUntil(lambda: self.test_configuration_events.STOPPED, TEST_CONFIGURATION_TIMEOUT, "Test Configuration Stop")
         if status:
-            logger.info(f'🧪🧍 stopped test configuration ({self.name}) with stop reason 👉 {self.test_configuration_events.TC_STOP_REASON.name} and verdict 👉 {self.test_configuration_events.TC_VERDICT.name}')
+            logger.info(f'🧪🧍 stopped test configuration ({self.name}) with stop reason 👉 {self.test_configuration_events.STOP_REASON.name} and verdict 👉 {self.test_configuration_events.VERDICT.name}')

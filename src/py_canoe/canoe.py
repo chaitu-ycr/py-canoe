@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Iterable
 if TYPE_CHECKING:
     from py_canoe.core.child_elements.measurement_setup import Logging, ExporterSymbol, Message
+    from py_canoe.core.child_elements.test_configurations import TestConfiguration
 
 import re
 import sys
@@ -449,6 +450,52 @@ class CANoe:
             bool: True if the operation was successful, False otherwise.
         """
         return self.application.configuration.enable_disable_replay_block(block_name, enable_disable)
+
+    def get_test_configurations(self) -> dict[str, 'TestConfiguration']:
+        """returns dictionary of test configuration names and its class object."""
+        return self.application.configuration.get_test_configurations()
+
+    def execute_all_test_configurations(self, wait_for_completion: bool = True) -> bool:
+        """executes all test configurations available in test setup.
+
+        Args:
+            wait_for_completion (bool): whether to wait for test configuration execution to complete before returning. defaults to True.
+
+        Returns:
+            bool: True if the operation was successful, False otherwise.
+        """
+        return self.application.configuration.execute_all_test_configurations(wait_for_completion)
+
+    def stop_all_test_configurations(self) -> bool:
+        """stops execution of all test configurations available in test setup.
+
+        Returns:
+            bool: True if the operation was successful, False otherwise.
+        """
+        return self.application.configuration.stop_all_test_configurations()
+
+    def execute_test_configuration(self, test_configuration_name: str, wait_for_completion: bool = True) -> bool:
+        """executes a specific test configuration.
+
+        Args:
+            test_configuration_name (str): The name of the test configuration to execute.
+            wait_for_completion (bool): Whether to wait for the test configuration execution to complete before returning. Defaults to True.
+
+        Returns:
+            bool: True if the operation was successful, False otherwise.
+        """
+        return self.application.configuration.execute_test_configuration(test_configuration_name, wait_for_completion)
+
+    def stop_test_configuration(self, test_configuration_name: str) -> bool:
+        """stops execution of a specific test configuration.
+
+        Args:
+            test_configuration_name (str): The name of the test configuration to stop.
+
+        Returns:
+            bool: True if the operation was successful, False otherwise.
+        """
+        return self.application.configuration.stop_test_configuration(test_configuration_name)
 
     def get_test_environments(self) -> dict:
         """returns dictionary of test environment names and class."""

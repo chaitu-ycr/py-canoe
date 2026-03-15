@@ -291,6 +291,62 @@ class Configuration:
             logger.error(f'❌ failed to get test configurations. {e}')
             return {}
 
+    def execute_all_test_configurations(self, wait_for_completion: bool = True) -> bool:
+        try:
+            for tc_name, tc_inst in self.__test_configurations.items():
+                tc_inst.start()
+                if wait_for_completion:
+                    while tc_inst.running:
+                        wait(1)
+                    logger.info(f'🧪🧍 completed executing test configuration ({tc_name}) with verdict 👉 {tc_inst.test_configuration_events.VERDICT.name}')
+                return True
+        except Exception as e:
+            logger.error(f'❌ failed to execute test configuration. {e}')
+            return False
+
+    def stop_all_test_configurations(self,) -> bool:
+        try:
+            for _, tc_inst in self.__test_configurations.items():
+                if tc_inst.running:
+                    tc_inst.stop()
+            return True
+        except Exception as e:
+            logger.error(f'❌ failed to stop test configuration. {e}')
+            return False
+
+    def execute_test_configuration(self, tc_name: str, wait_for_completion: bool = True) -> bool:
+        try:
+            if tc_name in self.__test_configurations.keys():
+                tc_inst = self.__test_configurations[tc_name]
+                tc_inst.start()
+                if wait_for_completion:
+                    while tc_inst.running:
+                        wait(1)
+                    logger.info(f'🧪🧍 completed executing test configuration ({tc_name}) with verdict 👉 {tc_inst.test_configuration_events.VERDICT.name}')
+                return True
+            else:
+                logger.warning(f'⚠️ test configuration "{tc_name}" not found in configuration')
+                return False
+        except Exception as e:
+            logger.error(f'❌ failed to execute test configuration. {e}')
+            return False
+
+    def stop_test_configuration(self, tc_name: str) -> bool:
+        try:
+            if tc_name in self.__test_configurations.keys():
+                tc_inst = self.__test_configurations[tc_name]
+                if tc_inst.running:
+                    tc_inst.stop()
+                else:
+                    logger.warning(f'⚠️ test configuration "{tc_name}" is not running')
+                return True
+            else:
+                logger.warning(f'⚠️ test configuration "{tc_name}" not found in configuration')
+                return False
+        except Exception as e:
+            logger.error(f'❌ failed to stop test configuration. {e}')
+            return False
+
     def get_test_environments(self) -> dict:
         try:
             return self.__test_setup_environments

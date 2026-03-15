@@ -287,6 +287,20 @@ canoe_inst.call_capl_function('hello_world')
 canoe_inst.stop_measurement()
 ```
 
+### execute test configuration test units
+
+```python
+from py_canoe import CANoe, wait
+canoe_inst = CANoe()
+canoe_inst.open(canoe_cfg=r'CAN\Diagnostics\UDSSystem\UDSSystem.cfg')
+canoe_inst.start_measurement()
+canoe_inst.execute_all_test_configurations(wait_for_completion=True)
+canoe_inst.execute_test_configuration('DiagTestConfiguration', wait_for_completion=False)
+wait(5)
+canoe_inst.stop_test_configuration()
+canoe_inst.stop_measurement()
+```
+
 ### execute test setup test module / test environment
 
 ```python

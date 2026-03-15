@@ -21,7 +21,7 @@ class TestUnits:
 
     def remove(self, index: int):
         self.com_object.Remove(index)
-    
+
     def fetch_all_test_units(self) -> dict[str, TestUnit]:
         test_units = dict()
         for index in range(1, self.count + 1):

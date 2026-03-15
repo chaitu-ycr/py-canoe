@@ -15,7 +15,7 @@ class TestTreeElements:
 
     def item(self, index: int) -> TestTreeElement:
         return TestTreeElement(self.com_object.Item(index))
-    
+
     def fetch_all_test_tree_elements(self) -> dict[str, TestTreeElement]:
         test_tree_elements = dict()
         for index in range(1, self.count + 1):

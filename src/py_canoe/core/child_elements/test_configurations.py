@@ -12,7 +12,7 @@ class TestConfigurations:
     @property
     def count(self) -> int:
         return self.com_object.Count
-    
+
     def item(self, index: int) -> TestConfiguration:
         return TestConfiguration(self.com_object.Item(index))
 
