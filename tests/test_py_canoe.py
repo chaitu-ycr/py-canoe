@@ -263,10 +263,28 @@ class TestStandalonePyCanoe:
     def test_test_unit_methods(self):
         self.canoe_inst.open(canoe_cfg=r'C:\Users\Public\Documents\Vector\CANoe\Sample Configurations 11.0.81\CAN\Diagnostics\UDSSystem\UDSSystem.cfg')
         assert self.canoe_inst.start_measurement()
-        test_configurations = self.canoe_inst.application.configuration.get_test_configurations()
+        test_configurations = self.canoe_inst.get_test_configurations()
         for tc_name in test_configurations.keys():
             assert self.canoe_inst.execute_test_configuration(tc_name, wait_for_completion=True)
         assert self.canoe_inst.application.configuration.execute_all_test_configurations(wait_for_completion=False)
         wait(5)
         assert self.canoe_inst.application.configuration.stop_all_test_configurations()
+        assert self.canoe_inst.stop_measurement()
+    
+    def test_profile_signal_performance(self):
+        self.canoe_inst.open(canoe_cfg=self.canoe_cfg_dev, visible=True, auto_save=False, prompt_user=False)
+        assert self.canoe_inst.start_measurement()
+        wait(1)
+        prof = self.canoe_inst.profile_signal_value(
+            bus='CAN',
+            channel=1,
+            message='EngineState',
+            signal='EngineSpeed',
+            duration=30.0,
+            interval=0.1,
+            include_samples=True,
+            include_timestamps=True,
+        )
+        assert prof.get('count', 0) >= 1
+        assert 'mean' in prof
         assert self.canoe_inst.stop_measurement()

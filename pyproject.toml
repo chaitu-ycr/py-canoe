@@ -1,6 +1,6 @@
 [project]
 name = "py-canoe"
-version = "26.1.1"
+version = "26.2.0"
 description = "Python 🐍 Package for accessing Vector CANoe 🛶 Tool via COM Interface"
 license = { file = "LICENSE" }
 readme = "README.md"
@@ -17,8 +17,20 @@ classifiers = [
     "Operating System :: Microsoft :: Windows"
 ]
 dependencies = [
-    "canmatrix[arxml,kcd,ldf,xls,xlsx,yaml,eds]",
     "pywin32",
+]
+
+[project.optional-dependencies]
+robot = ["robotframework"]
+database = ["canmatrix[arxml,kcd,ldf,xls,xlsx,yaml,eds]", "pandas"]
+restapi = ["fastapi[standard]"]
+plot = ["plotly", "pandas"]
+report = ["datapane", "plotly", "pandas"]
+all = [
+    "robotframework",
+    "fastapi[standard]",
+    "canmatrix[arxml,kcd,ldf,xls,xlsx,yaml,eds]",
+    "plotly", "pandas", "datapane",
 ]
 
 [dependency-groups]
@@ -32,7 +44,7 @@ dev = [
     "pytest-watch",
     "mkdocs-puml",
     "mkdocs-exclude",
-    "mkdocs-material",
+    "mkdocs-material<10",
     "mkdocs-jupyter",
     "mkdocstrings-python",
     "mkdocs-macros-plugin",
@@ -55,5 +67,5 @@ quote-style = "double"
 indent-style = "space"
 
 [build-system]
-requires = ["uv_build"]
-build-backend = "uv_build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
