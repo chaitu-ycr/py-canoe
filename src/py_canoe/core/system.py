@@ -137,7 +137,7 @@ class System:
             logger.error(f"❌ Error setting System Variable Array '{sys_var_name}': {e}")
             return False
 
-    def get_namespaces(self) -> Union[dict['str': 'Namespace'], None]:
+    def get_namespaces(self) -> dict[str, "Namespace"] | None:
         try:
             namespaces_dict = {}
             namespaces = self.namespaces
@@ -150,7 +150,7 @@ class System:
             logger.error(f"❌ Error getting system namespaces: {e}")
             return None
 
-    def get_variables_files(self) -> Union[dict['str': 'VariablesFile'], None]:
+    def get_variables_files(self) -> dict[str, "VariablesFile"] | None:
         try:
             variables_files_dict = {}
             variables_files = self.variables_files
